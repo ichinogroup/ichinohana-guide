@@ -7,8 +7,8 @@
 
 body {
   font-family: "Noto Serif JP", serif;
-  background: linear-gradient(rgba(246,241,231,0.9), rgba(246,241,231,0.9)),
-              url("japan-bg.jpg") center/cover fixed no-repeat;
+  background: linear-gradient(rgba(246,241,231,0.45), rgba(246,241,231,0.45)),
+            url("japan-bg.jpg") center/cover fixed no-repeat;
   color: #3e3025;
   line-height: 1.8;
 }
