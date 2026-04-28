@@ -21,7 +21,7 @@ body {
 .logo {
   width: 140px;
   height: auto;
-  margin-bottom: 20px;
+  image-redering:auto;
 }
 
 .active {
