@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homestay Guide</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Welcome Page -->
+  <div id="welcomePage" class="page active">
+    <div class="welcome">
+      <h1>Welcome to Our Homestay</h1>
+      <p>Please choose your language</p>
+
+      <div class="lang-buttons">
+        <button onclick="showGuide('en')">English</button>
+        <button onclick="showGuide('jp')">日本語</button>
+        <button onclick="showGuide('cn')">中文</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guide Page -->
+  <div id="guidePage" class="page">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+
+    <div class="guide-header">
+      <h2 id="guideTitle">Homestay Guide</h2>
+      <p id="guideSubtitle">Important Information</p>
+    </div>
+
+    <div class="menu" id="menuContainer"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
