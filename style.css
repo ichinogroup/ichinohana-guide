@@ -126,20 +126,21 @@ body {
 /* Header */
 .guide-header {
   text-align: center;
-  padding: 35px 20px 25px;
-  background: rgba(239,228,209,0.88);
-  border-bottom: 1px solid #d8c7aa;
+  padding: 22px 20px 18px;
+  background: rgba(255,248,240,0.82);
+  border-bottom: 1px solid #e2d5c0;
 }
 
 .guide-header h2 {
-  font-size: 2.2rem;
-  margin-bottom: 8px;
-  letter-spacing: 2px;
+  font-size: 2rem;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .guide-header p {
-  font-size: 1rem;
-  color: #6f5338;
+  font-size: 0.95rem;
+  color: #7a6248;
 }
 
 /* Menu */
