@@ -1,11 +1,19 @@
+// script.js
+
 const data = {
   en: {
     title: "House Manual",
     subtitle: "Find the information you need",
     items: [
-      ["Wifi","ID: ichinohana1<br>\PW: 20241010"],
-      ["Before Entering The House", "Please remove your shoes before entering.<br>\Use the suitcase wheel covers to protect the tatami floor.",
-      <img src="images/tatami-cover.jpg" style="width:100%; max-width:320px; border-radius:10px;">"],
+      ["Wifi", "ID: ichinohana1<br>PW: 20241010"],
+
+      [
+        "Before Entering The House",
+        `Please remove your shoes before entering.<br>
+         Use the suitcase wheel covers to protect the tatami floor.<br><br>
+         <img src="images/tatami-cover.jpg" style="width:100%; max-width:320px; border-radius:10px;">`
+      ],
+
       ["Light Switches", "Main switches are near the entrance and beside the bed."],
       ["Air Conditioner Remote", "Use the remote control. Cooling: 24°C, Heating: 26°C recommended."],
       ["Hot Water Panel", "Adjust the central water temperature carefully. Default is 42°C."],
@@ -13,7 +21,7 @@ const data = {
       ["Trash Disposal", "Separate burnable, plastic, and cans/bottles into labeled bins."],
       ["Other Notes", "Do not smoke indoors. Please lock doors when leaving."],
       ["House Rules", "No parties, no pets, and respect neighbors."],
-      ["Laundry", "Please use the QR codes near the washing machine for instructions."]
+      ["Laundry", "Please use the QR codes near the washing machine and dryer for instructions."]
     ]
   },
 
@@ -21,9 +29,15 @@ const data = {
     title: "宿泊案内",
     subtitle: "必要な情報をお選びください",
     items: [
-      ["Wifi","ID: ichinohana1<br>\PW: 20241010"],
-      ["入室前", "入室前に靴をお脱ぎください。<br>\畳を保護するため、スーツケースの車輪カバーをご使用ください。,
-       <img src="images/tatami-cover.jpg" style="width:100%; max-width:320px; border-radius:10px;">"],
+      ["Wifi", "ID: ichinohana1<br>PW: 20241010"],
+
+      [
+        "入室前",
+        `入室前に靴をお脱ぎください。<br>
+         畳を保護するため、スーツケースの車輪カバーをご使用ください。<br><br>
+         <img src="images/tatami-cover.jpg" style="width:100%; max-width:320px; border-radius:10px;">`
+      ],
+
       ["電気スイッチ", "メインスイッチは入口とベッド横にあります。"],
       ["エアコン", "リモコンをご利用ください。冷房24°C、暖房26°C推奨。"],
       ["給湯温度", "中央給湯温度を調整できます。標準は42°Cです。"],
@@ -39,9 +53,15 @@ const data = {
     title: "民宿指南",
     subtitle: "请选择您需要的信息",
     items: [
-      ["Wifi","ID: ichinohana1<br>\PW: 20241010"],
-      ["进入房屋前", "进入房间前请脱鞋。<br>\为了保护榻榻米，请使用行李箱轮套。,
-       <img src="images/tatami-cover.jpg" style="width:100%; max-width:320px; border-radius:10px;">"],
+      ["Wifi", "ID: ichinohana1<br>PW: 20241010"],
+
+      [
+        "进入房屋前",
+        `进入房间前请脱鞋。<br>
+         为了保护榻榻米，请使用行李箱轮套。<br><br>
+         <img src="images/tatami-cover.jpg" style="width:100%; max-width:320px; border-radius:10px;">`
+      ],
+
       ["电灯开关", "主开关在入口和床边。"],
       ["空调调节", "使用遥控器。建议制冷24°C，制热26°C。"],
       ["热水温度", "可调整中央热水器，默认42°C。"],
