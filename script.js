@@ -11,7 +11,7 @@ const data = {
         "Before Entering The House",
         `Please remove your shoes before entering.<br>
          Use the suitcase wheel covers to protect the tatami floor.<br><br>
-         <img src='images/tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
+         <img src='tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
       ],
 
       ["Light Switches", "Main switches are near the entrance and beside the bed."],
@@ -35,7 +35,7 @@ const data = {
         "入室前",
         `入室前に靴をお脱ぎください。<br>
          畳を保護するため、スーツケースの車輪カバーをご使用ください。<br><br>
-         <img src='images/tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
+         <img src='tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
       ],
 
       ["電気スイッチ", "メインスイッチは入口とベッド横にあります。"],
@@ -59,7 +59,7 @@ const data = {
         "进入房屋前",
         `进入房间前请脱鞋。<br>
          为了保护榻榻米，请使用行李箱轮套。<br><br>
-         <img src='images/tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
+         <img src='tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
       ],
 
       ["电灯开关", "主开关在入口和床边。"],
