@@ -14,8 +14,8 @@ const data = {
          <img src='tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
       ],
 
-      ["Light Switches", "switch-guide.pdf"],
-      ["Air Conditioner Remote", "airconditionerremote.pdf"],
+      ["Light Switches", `<a href="switch-guide.pdf" target="_blank">Open PDF Guide</a>`],
+      ["Air Conditioner Remote", `<a href="airconditionerremote.pdf" target="_blank">Open PDF Guide</a>`],
       ["Hot Water Panel", "Adjust the central water temperature carefully. Default is 42°C."],
       ["Coffee Machine", "Fill water tank, insert capsule, and press the start button."],
       ["Trash Disposal", "Separate burnable, plastic, and cans/bottles into labeled bins."],
@@ -39,8 +39,8 @@ const data = {
       ],
 
       [
-        "エアコン", "冷房24°C、暖房26°C推奨。<br>
-       `いきなり暖房30度にしたら、エアコンが作動出来ませんので、25度ぐらいをすすめて、以後1時間ごと1度でアップするようにお願いいたします。`
+        "エアコン", `冷房24°C、暖房26°C推奨。<br>
+       いきなり暖房30度にしたら、エアコンが作動出来ませんので、25度ぐらいをすすめて、以後1時間ごと1度でアップするようにお願いいたします。`
        ],
       
       ["給湯温度", "中央給湯温度を調整できます。標準は42°Cです。"],
@@ -65,8 +65,8 @@ const data = {
          <img src='tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
       ],
 
-      ["电灯开关", "切换指南.pdf"],
-      ["空调调节", "空调.pdf"],
+      ["电灯开关", `<a href="切换指南.pdf" target="_blank">Open PDF Guide</a>`],
+      ["空调调节",`<a href="空调.pdf" target="_blank">Open PDF Guide</a>` ],
       ["热水温度", "可调整中央热水器，默认42°C。"],
       ["咖啡机", "加水，放入胶囊，然后按启动按钮。"],
       ["如何丢垃圾", "请分类：可燃垃圾、塑料、瓶罐。"],
