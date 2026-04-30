@@ -16,7 +16,7 @@ const data = {
 
       ["Light Switches", `<a href="switch-guide.pdf" target="_blank">Open PDF Guide</a>`],
       ["Air Conditioner Remote", `<a href="airconditionerremote.pdf" target="_blank">Open PDF Guide</a>`],
-      ["Hot Water Panel", "Adjust the central water temperature carefully. Default is 42°C."],
+      ["Hot Water Panel", "There are two hot water control panels in the house.<br><br>◆ <b>Large bathroom panel</b>: Located on the wall inside the large bathroom.<br>◆ <b>Kitchen panel</b>: Located on the wall in the kitchen.<br><br><b>Important notes:</b><br><br>◆ If the temperature is accidentally set to <b>60°C</b>, water may stop flowing properly.<br>◆ If the water is not getting warm, please check whether the unit is turned <b>ON</b>.<br>◆ The system may turn itself off automatically after a period of inactivity.<br><br><img src='hot-water-panel.png' style='width:100%; max-width:320px; border-radius:10px;'>"],
       ["Coffee Machine", "Fill water tank, insert capsule, and press the start button."],
       ["Trash Disposal", "Separate burnable, plastic, and cans/bottles into labeled bins."],
       ["Other Notes", "Do not smoke indoors. Please lock doors when leaving."],
@@ -43,7 +43,7 @@ const data = {
        いきなり暖房30度にしたら、エアコンが作動出来ませんので、25度ぐらいをすすめて、以後1時間ごと1度でアップするようにお願いいたします。`
        ],
       
-      ["給湯温度", "中央給湯温度を調整できます。標準は42°Cです。"],
+      ["給湯温度", "家の中に給湯操作パネルが2か所あります。<br><br>◆ <b>大きい浴室のパネル</b>：大きい浴室の壁にあります。大きい浴室のお湯を操作します。<br>◆ <b>キッチンのパネル</b>：キッチンの壁にあります。小さい浴室とキッチンシンクのお湯を操作します。<br><br><b>ご注意ください：</b><br><br>◆ 誤って <b>60℃</b> に設定すると、お湯が正常に出なくなることがあります。温度を下げてください。<br>◆ お湯がぬるい、または温かくならない場合は、電源が <b>ON</b> になっているかご確認ください。<br>◆ しばらく使用しないと、自動的に電源が切れることがあります。<br><br><img src='給湯温度.png' style='width:100%; max-width:320px; border-radius:10px;'>"],
       ["コーヒーマシン", "水を入れ、カプセルをセットし、開始ボタンを押してください。"],
       ["ゴミ捨て方", "燃えるゴミ、プラスチック、缶・瓶を分別してください。"],
       ["その他注意", "室内禁煙。外出時は施錠してください。"],
@@ -67,7 +67,7 @@ const data = {
 
       ["电灯开关", `<a href="切换指南.pdf" target="_blank">Open PDF Guide</a>`],
       ["空调调节",`<a href="空调.pdf" target="_blank">Open PDF Guide</a>` ],
-      ["热水温度", "可调整中央热水器，默认42°C。"],
+      ["热水温度", "屋内有两个热水控制面板。<br><br>◆ <b>大浴室面板</b>：安装在大浴室墙上，用于控制大浴室的热水。<br>◆ <b>厨房面板</b>：安装在厨房墙上，用于控制小浴室和厨房水槽的热水。<br><br><b>请注意：</b><br><br>◆ 如果误设为 <b>60℃</b>，热水可能无法正常流出，请将温度调低。<br>◆ 如果水不够热或没有变热，请确认设备是否已开启（<b>ON</b>）。<br>◆ 若一段时间未使用，设备可能会自动关闭。<br><br><img src='热水温度.png' style='width:100%; max-width:320px; border-radius:10px;'>"],
       ["咖啡机", "加水，放入胶囊，然后按启动按钮。"],
       ["如何丢垃圾", "请分类：可燃垃圾、塑料、瓶罐。"],
       ["其他注意事项", "室内禁止吸烟，离开时请锁门。"],
