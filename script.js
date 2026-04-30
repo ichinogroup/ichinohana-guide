@@ -14,8 +14,8 @@ const data = {
          <img src='tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
       ],
 
-      ["Light Switches", "Main switches are near the entrance and beside the bed."],
-      ["Air Conditioner Remote", "Use the remote control. Cooling: 24°C, Heating: 26°C recommended."],
+      ["Light Switches", "switch-guide.pdf"],
+      ["Air Conditioner Remote", "airconditionerremote.pdf"],
       ["Hot Water Panel", "Adjust the central water temperature carefully. Default is 42°C."],
       ["Coffee Machine", "Fill water tank, insert capsule, and press the start button."],
       ["Trash Disposal", "Separate burnable, plastic, and cans/bottles into labeled bins."],
@@ -38,8 +38,11 @@ const data = {
          <img src='tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
       ],
 
-      ["電気スイッチ", "メインスイッチは入口とベッド横にあります。"],
-      ["エアコン", "リモコンをご利用ください。冷房24°C、暖房26°C推奨。"],
+      [
+        "エアコン", "冷房24°C、暖房26°C推奨。<br>
+       `いきなり暖房30度にしたら、エアコンが作動出来ませんので、25度ぐらいをすすめて、以後1時間ごと1度でアップするようにお願いいたします。`
+       ],
+      
       ["給湯温度", "中央給湯温度を調整できます。標準は42°Cです。"],
       ["コーヒーマシン", "水を入れ、カプセルをセットし、開始ボタンを押してください。"],
       ["ゴミ捨て方", "燃えるゴミ、プラスチック、缶・瓶を分別してください。"],
@@ -62,8 +65,8 @@ const data = {
          <img src='tatami-cover.jpg' style='width:100%; max-width:320px; border-radius:10px;'>`
       ],
 
-      ["电灯开关", "主开关在入口和床边。"],
-      ["空调调节", "使用遥控器。建议制冷24°C，制热26°C。"],
+      ["电灯开关", "切换指南.pdf"],
+      ["空调调节", "空调.pdf"],
       ["热水温度", "可调整中央热水器，默认42°C。"],
       ["咖啡机", "加水，放入胶囊，然后按启动按钮。"],
       ["如何丢垃圾", "请分类：可燃垃圾、塑料、瓶罐。"],
