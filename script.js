@@ -21,7 +21,7 @@ const data = {
       ["Trash Disposal", "Please separate domestic waste and cans/bottles into labeled bins.<br>If the bin is full, remove the garbage from the bin, place it outside the front door, and contact the staff for collection.<br><br><img src='garbage.png' style='width:100%; max-width:320px; border-radius:10px;'>"],
       ["Other Notes", "◆ <b>Please turn on the range hood when cooking to prevent cooking smoke from triggering the fire alarm and causing odors to linger in the house.<br><img src='range-hood.png' style='width:100%; max-width:320px; border-radius:10px;'><br><br>◆ <b>Please use the prepared outdoor slippers when going into the garden. Do not use the indoor slippers for the garden.<br><img src='garden-slippers.png' style='width:100%; max-width:320px; border-radius:10px;'>"],
       ["House Rules", "No parties, no pets, and respect neighbors."],
-      ["Laundry", "Please use the QR codes near the washing machine and dryer for instructions."]
+      ["Laundry", "Please use the QR codes near the washing machine for instructions."]
     ]
   },
 
