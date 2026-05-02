@@ -94,7 +94,7 @@ const data = {
 `<div style="font-family: Arial, sans-serif; max-width: 850px; margin: 0 auto; line-height: 1.7;">
 
   <h2 style="color: #1a3c6e; text-align: center; border-bottom: 3px solid #1a3c6e; padding-bottom: 12px;">
-    一花（いちはな）ハウスルール
+    一の華 ハウスルール
   </h2>
 
   <strong>基本ルール</strong><br><br>
@@ -160,7 +160,7 @@ const data = {
 `<div style="font-family: Arial, sans-serif; max-width: 850px; margin: 0 auto; line-height: 1.8;">
 
   <h2 style="color: #1a3c6e; text-align: center; border-bottom: 3px solid #1a3c6e; padding-bottom: 12px;">
-    一花民宿 房屋守则
+    一の華 房屋守则
   </h2>
 
   <strong>基本规则</strong><br><br>
