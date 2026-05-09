@@ -63,7 +63,7 @@ const data = {
 
 </div>`
         ],
-      ["Laundry", "Please use the QR codes near the washing machine for instructions."]
+      ["Laundry", "Please refer to the instruction sheet nearby for how to use the washing machine."]
     ]
   },
 
@@ -132,7 +132,6 @@ const data = {
 
 </div>`
         ],
-      ["洗濯機・乾燥機", "近くのQRコードを読み取って使い方をご確認ください。"]
     ]
   },
 
@@ -198,7 +197,7 @@ const data = {
 
 </div>`
         ],
-      ["洗衣机和烘干机", "请扫描附近的二维码查看使用说明。"]
+      ["洗衣机和烘干机", "请参阅洗衣机旁边的使用说明书。"]
     ]
   }
 };
