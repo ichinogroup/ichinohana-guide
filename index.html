@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F6F3EE">
+  <meta name="robots" content="noindex">
+  <title>Guest Guide</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+/* ============================================================
+   Guest Guide — giao diện dùng chung cho 4 nhà
+   Màu nhấn của từng nhà lấy từ HOUSE.accent trong script.js
+   ============================================================ */
+
+:root {
+  --bg: #F6F3EE;
+  --surface: #FFFFFF;
+  --ink: #2A2622;
+  --muted: #7C736A;
+  --line: #E8E2D9;
+  --accent: #6B5A4A;
+  --accent-soft: rgba(107, 90, 74, .08);
+  --radius: 18px;
+  --serif: "Shippori Mincho", "Noto Serif JP", "Noto Serif CJK JP", "Yu Mincho", "Songti SC", serif;
+  --sans: "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Sans", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --bar-h: 56px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15.5px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.5;
+      stroke-linecap: round; stroke-linejoin: round; flex: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer;
+         -webkit-tap-highlight-color: transparent; }
+
+.wrap { max-width: 560px; margin: 0 auto; padding: 0 18px; }
+
+/* ---------- Welcome (language picker) ---------- */
+.welcome {
+  position: fixed; inset: 0; z-index: 40; overflow-y: auto;
+  display: flex; align-items: center; justify-content: center;
+  padding: calc(32px + env(safe-area-inset-top)) 24px calc(32px + env(safe-area-inset-bottom));
+  background-color: #3e3025;
+  background-image: linear-gradient(rgba(62, 48, 37, .35), rgba(62, 48, 37, .35)), var(--bg-img, none);
+  background-position: center; background-size: cover; background-repeat: no-repeat;
+  transition: opacity .35s ease, transform .35s ease;
+}
+.welcome[hidden] { display: none; }
+.welcome.leaving { opacity: 0; transform: scale(1.02); pointer-events: none; }
+.w-inner { width: 100%; max-width: 340px; text-align: center; }
+/* animate children one by one (animating the wrapper would break the logo's white-background removal) */
+.w-inner > * { animation: w-in .7s ease-out both; }
+.w-inner > :nth-child(2) { animation-delay: .08s; }
+.w-inner > :nth-child(3) { animation-delay: .16s; }
+.w-inner > :nth-child(4) { animation-delay: .24s; }
+@keyframes w-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.w-logo {
+  width: 168px; height: 168px; object-fit: contain; display: block; margin: 0 auto 10px;
+}
+.w-name {
+  color: #fffdf8; text-shadow: 0 3px 12px rgba(0, 0, 0, .25);
+  font-family: var(--serif); font-weight: 600; font-size: 36px; line-height: 1.3;
+  letter-spacing: .18em; padding-left: .18em; margin-bottom: 40px;
+}
+.w-langs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.w-langs button {
+  min-height: 52px; padding: 0 4px; border-radius: 999px; font-size: 15px; letter-spacing: .04em; white-space: nowrap;
+  background: var(--surface); border: 1px solid var(--line); color: var(--ink);
+  box-shadow: 0 1px 2px rgba(42, 38, 34, .03), 0 6px 18px rgba(42, 38, 34, .05);
+  transition: background .2s, color .2s, border-color .2s, transform .15s;
+}
+.w-langs button:active { transform: scale(.98); background: var(--accent); border-color: var(--accent); color: #fff; }
+@media (hover: hover) { .w-langs button:hover { border-color: var(--accent); color: var(--accent); } }
+.w-hint { margin-top: 26px; font-size: 11.5px; letter-spacing: .08em; color: rgba(255, 253, 248, .85); }
+
+/* photo background behind the guide (fixed, with a light wash) */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(246, 243, 238, .55), rgba(246, 243, 238, .55)), var(--bg-img, none);
+  background-position: center; background-size: cover;
+}
+
+/* ---------- Top bar ---------- */
+.bar {
+  position: sticky; top: 0; z-index: 10;
+  height: calc(var(--bar-h) + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 18px 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: rgba(246, 243, 238, .86);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s;
+}
+.bar.scrolled { border-bottom-color: var(--line); }
+.bar-name {
+  font-family: var(--serif); font-size: 17px; letter-spacing: .12em;
+  opacity: 0; transform: translateY(4px); transition: opacity .3s, transform .3s;
+}
+.bar.scrolled .bar-name { opacity: 1; transform: none; }
+
+.lang {
+  display: flex; padding: 3px; gap: 2px; margin-left: auto;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+}
+.lang button {
+  font-size: 12.5px; line-height: 1; padding: 8px 12px; border-radius: 999px;
+  color: var(--muted); transition: background .2s, color .2s;
+}
+.lang button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+
+/* ---------- Hero ---------- */
+.hero { text-align: center; padding: 20px 0 28px; }
+.logo {
+  width: 132px; height: 132px; object-fit: contain; display: block; margin: 0 auto 6px;
+  mix-blend-mode: multiply;           /* xoá nền trắng của logo */
+}
+.prefix { font-family: var(--serif); font-size: 13px; letter-spacing: .3em; color: var(--muted); min-height: 0; }
+.prefix:empty { display: none; }
+.hero h1 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: 32px; line-height: 1.3; letter-spacing: .16em; padding-left: .16em;
+}
+
+/* ---------- Quick info card ---------- */
+.quick {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(42, 38, 34, .03), 0 8px 24px rgba(42, 38, 34, .04);
+  padding: 4px 18px;
+}
+.q-row {
+  display: flex; align-items: center; gap: 14px; padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.q-row:last-child { border-bottom: 0; }
+.q-icon { font-size: 22px; color: var(--accent); width: 24px; display: flex; justify-content: center; }
+.q-text { flex: 1; min-width: 0; }
+.q-k { display: block; font-size: 11.5px; letter-spacing: .08em; color: var(--muted); line-height: 1.4; }
+.q-v {
+  display: block; font-size: 17px; font-weight: 500; line-height: 1.45;
+  font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+}
+.copy {
+  display: inline-flex; align-items: center; gap: 6px; flex: none;
+  font-size: 12.5px; padding: 8px 14px; min-height: 36px; border-radius: 999px;
+  color: var(--accent); border: 1px solid currentColor; transition: background .2s, color .2s;
+}
+.copy svg { font-size: 14px; }
+.copy.done { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.q-times { display: grid; grid-template-columns: 1fr 1px 1fr; align-items: center; padding: 16px 0; }
+.q-times::before { content: ""; grid-column: 2; grid-row: 1; height: 36px; background: var(--line); }
+.q-time { text-align: center; grid-row: 1; }
+.q-time:first-child { grid-column: 1; }
+.q-time:last-child { grid-column: 3; }
+.q-time .q-v { font-family: var(--serif); font-size: 24px; font-weight: 500; letter-spacing: .04em; }
+
+.q-contact {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 2px 0 14px; padding: 12px; border-radius: 12px;
+  background: var(--accent-soft); color: var(--accent); font-weight: 500; text-decoration: none;
+}
+
+/* ---------- Section label ---------- */
+.label {
+  display: flex; align-items: center; gap: 12px;
+  margin: 34px 0 14px; font-family: var(--serif); font-weight: 500;
+  font-size: 13px; letter-spacing: .24em; color: var(--muted);
+}
+.label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+/* ---------- Tiles ---------- */
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.tile {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px;
+  padding: 16px 6px 14px; min-height: 100px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  text-align: center; color: var(--ink); text-decoration: none;
+  -webkit-tap-highlight-color: transparent; transition: transform .15s, border-color .2s;
+}
+.tile:active { transform: scale(.97); border-color: var(--accent); }
+.tile svg { font-size: 26px; color: var(--accent); stroke-width: 1.3; }
+.tile span {
+  font-size: 12.5px; line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+@media (max-width: 340px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- Detail panel ---------- */
+body.locked { overflow: hidden; }
+.panel {
+  position: fixed; inset: 0; z-index: 30; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  background-color: var(--bg);
+  background-image: linear-gradient(rgba(246, 243, 238, .55), rgba(246, 243, 238, .55)), var(--bg-img, none);
+  background-position: center; background-size: cover; background-attachment: fixed;
+  animation: panel-in .28s ease-out;
+}
+.panel[hidden] { display: none; }
+@keyframes panel-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+.p-head {
+  position: sticky; top: 0; z-index: 1;
+  display: flex; align-items: center; gap: 6px;
+  height: calc(var(--bar-h) + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 12px 0 8px;
+  background: rgba(246, 243, 238, .9);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.p-back {
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 22px;
+}
+.p-back:active { background: var(--accent-soft); }
+.p-back:focus { outline: none; }
+.p-back:focus-visible, .tile:focus-visible, .w-langs button:focus-visible, .lang button:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+.p-head h2 {
+  font-family: var(--serif); font-weight: 600; font-size: 17px; letter-spacing: .06em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.p-wrap { max-width: 560px; margin: 0 auto; padding: 26px 18px calc(32px + env(safe-area-inset-bottom)); }
+.p-icon {
+  width: 56px; height: 56px; margin: 0 auto 18px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 26px;
+  color: var(--accent); background: var(--accent-soft);
+}
+.p-body {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 22px 20px 24px; font-size: 15.5px; line-height: 1.85; color: #3A342F;
+  box-shadow: 0 1px 2px rgba(42, 38, 34, .03), 0 8px 24px rgba(42, 38, 34, .04);
+}
+.p-body b, .p-body strong { font-weight: 500; color: var(--ink); }
+.p-body img {
+  display: block; width: 100%; height: auto; margin: 16px 0 8px;
+  border-radius: 12px; border: 1px solid var(--line); background: var(--bg);
+}
+.p-body a { color: var(--accent); text-underline-offset: 3px; }
+.p-body a.pdf {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 13px 18px; min-height: 50px; border-radius: 999px;
+  background: var(--accent); color: #fff; text-decoration: none; font-size: 15px; font-weight: 500;
+}
+.p-body a.pdf svg { font-size: 19px; }
+
+/* house rules */
+.p-body .lead { background: var(--accent-soft); border-radius: 12px; padding: 12px 14px; margin-bottom: 6px; }
+.p-body h4 {
+  font-family: var(--serif); font-weight: 600; font-size: 15.5px; color: var(--accent);
+  margin: 22px 0 6px; letter-spacing: .04em;
+}
+.p-body ol, .p-body ul { padding-left: 1.3em; }
+.p-body li { margin: 6px 0; padding-left: 2px; }
+.p-body li::marker { color: var(--muted); font-size: .9em; }
+.p-body li ul { margin-top: 4px; }
+
+.p-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.p-nav a {
+  display: flex; align-items: center; gap: 8px; min-height: 64px; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 14px; background: var(--surface);
+  color: var(--ink); text-decoration: none; font-size: 13.5px; line-height: 1.35;
+}
+.p-nav a svg { font-size: 18px; color: var(--accent); }
+.p-nav a span { min-width: 0; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.p-nav small { display: block; font-size: 11px; color: var(--muted); letter-spacing: .06em; }
+.p-next { justify-content: flex-end; text-align: right; }
+
+/* ---------- Footer ---------- */
+.foot {
+  max-width: 560px; margin: 0 auto; text-align: center;
+  padding: 40px 18px calc(44px + env(safe-area-inset-bottom));
+  color: var(--muted); font-size: 12px; letter-spacing: .06em;
+}
+.foot p { font-family: var(--serif); font-size: 15px; color: var(--ink); letter-spacing: .1em; }
+
+@media (min-width: 600px) {
+  .hero { padding-top: 40px; }
+  .hero h1 { font-size: 38px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Màn hình mở đầu: chọn ngôn ngữ -->
+  <section class="welcome" id="welcome" aria-label="Select language">
+    <div class="w-inner">
+      <img class="w-logo" id="wLogo" alt="">
+      <h1 class="w-name" id="wName"></h1>
+      <div class="w-langs">
+        <button type="button" data-pick="en">English</button>
+        <button type="button" data-pick="jp">日本語</button>
+        <button type="button" data-pick="cn">中文</button>
+      </div>
+      <p class="w-hint">Select language ・ 言語を選択 ・ 选择语言</p>
+    </div>
+  </section>
+
+  <header class="bar" id="bar">
+    <span class="bar-name" id="barName"></span>
+    <nav class="lang" id="lang" aria-label="Language">
+      <button type="button" data-lang="jp">日本語</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="cn">中文</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="hero">
+      <img class="logo" id="logo" alt="">
+      <p class="prefix" id="prefix"></p>
+      <h1 id="houseName"></h1>
+    </section>
+
+    <section class="quick" id="quick" aria-label="Wi-Fi / Check-in"></section>
+
+    <h2 class="label" id="labelGuide"></h2>
+    <nav class="tiles" id="tiles"></nav>
+  </main>
+
+  <footer class="foot" id="foot"></footer>
+
+  <!-- trang chi tiết của từng mục (tạo tự động từ script.js) -->
+  <div id="panels"></div>
+
+  <!-- ============================================================
+     NỘI DUNG CỦA NHÀ NÀY (WiFi, giờ, các mục hướng dẫn)
+     Muốn sửa chữ / ảnh / WiFi thì sửa trong khối <script> ngay dưới đây.
+     ============================================================ -->
+  <script>
+// ============================================================
+// 一の華 — Nội dung trang hướng dẫn (案内)
+// Muốn sửa chữ, ảnh, WiFi… thì CHỈ sửa file này.
+// style.css và app.js dùng chung cho cả 4 nhà, không cần sửa.
+// ============================================================
+
+const HOUSE = {
+  name: "一の華",
+  prefix: "お宿",          // chữ nhỏ phía trước tên (để trống nếu không dùng)
+  romaji: "Ichi no Hana",
+  place: { en: "Hida-Takayama", jp: "飛騨高山", cn: "飞驒高山" },
+  logo: "logo.png",
+  background: "japan-bg.jpg",   // ảnh nền (giống bản gốc)
+  accent: "#9B5566",      // màu nhấn của nhà này
+  wifi: { id: "ichinohana1", pw: "20241010" },
+  checkin: "16:00",
+  checkout: "10:00",
+  contact: "",               // (tuỳ chọn) số điện thoại hoặc link LINE, ví dụ "tel:+81-577-00-0000"
+};
+
+// Mỗi mục: id (không đổi), icon, title (tên mục), body (nội dung HTML)
+// icon có sẵn: arrival, switch, aircon, water, coffee, trash, notes, rules, laundry, other
+const GUIDE = {
+  en: [
+    {
+      id: "arrival", icon: "arrival",
+      title: "Before Entering The House",
+      body: `Please remove your shoes before entering.<br>
+Use the suitcase wheel covers to protect the tatami floor.<br><br>
+<img src="tatami-cover.jpg">`
+    },
+    {
+      id: "switch", icon: "switch",
+      title: "Light Switches",
+      body: `<a class="pdf" href="switch-guide.pdf" target="_blank" rel="noopener">PDF</a>`
+    },
+    {
+      id: "aircon", icon: "aircon",
+      title: "Air Conditioner Remote",
+      body: `<a class="pdf" href="airconditionerremote.pdf" target="_blank" rel="noopener">PDF</a>`
+    },
+    {
+      id: "water", icon: "water",
+      title: "Hot Water Panel",
+      body: `There are two hot water control panels in the house.<br><br>◆ <b>Large bathroom panel</b>: Located on the wall inside the large bathroom.<br>◆ <b>Kitchen panel</b>: Located on the wall in the kitchen.<br><br><b>Important notes:</b><br><br>◆ If the temperature is accidentally set to <b>60°C</b>, water may stop flowing properly.<br>◆ If the water is not getting warm, please check whether the unit is turned <b>ON</b>.<br>◆ The system may turn itself off automatically after a period of inactivity.<br><br><img src="hot-water-panel.png">`
+    },
+    {
+      id: "coffee", icon: "coffee",
+      title: "Coffee Machine",
+      body: `Press the ON button to start.<br><br><img src="coffeemachine.png">`
+    },
+    {
+      id: "trash", icon: "trash",
+      title: "Trash Disposal",
+      body: `Please separate domestic waste and cans/bottles into labeled bins.<br>If the bin is full, remove the garbage from the bin, place it outside the front door, and contact the staff for collection.<br><br><img src="garbage.png">`
+    },
+    {
+      id: "notes", icon: "notes",
+      title: "Other Notes",
+      body: `◆ Please turn on the range hood when cooking to prevent cooking smoke from triggering the fire alarm and causing odors to linger in the house.<br><img src="range-hood.png"><br><br>◆ Please use the prepared outdoor slippers when going into the garden. Do not use the indoor slippers for the garden.<br><img src="garden-slippers.png">`
+    },
+    {
+      id: "rules", icon: "rules",
+      title: "House Rules",
+      body: `<p class="lead"><strong>Check-in</strong> 16:00 ｜ <strong>Check-out</strong> 10:00 <strong>(strictly enforced)</strong><br>
+<strong>Smoking is strictly prohibited</strong> throughout the entire facility (inside, garden &amp; entrance).</p>
+
+<h4>A. Regarding Use of the Facility</h4>
+<ol>
+  <li><strong>No shoes</strong> inside the house. Do not roll wheeled suitcases on tatami mats.</li>
+  <li>Keep the entrance door <strong>locked at all times</strong>.</li>
+  <li><strong>Smoking is completely prohibited.</strong> Penalty: <strong>¥30,000</strong> cleaning fee if detected inside.</li>
+  <li>Only registered guests allowed. <strong>¥7,000 penalty per extra/unauthorized person</strong>.</li>
+  <li>Do not use fire, candles or open flame for heating/cooking without permission. Use only provided utensils and wash dishes after use.</li>
+  <li>No business activities, parties, or events without permission.</li>
+  <li>Keep quiet, especially between <strong>22:00 – 07:00</strong>.</li>
+  <li>Do not remove any furnishings, fixtures or items (toilet paper, towels, etc.).</li>
+  <li>Use furniture and appliances with care.
+    <ul><li>Full replacement cost for damage.</li><li><strong>Special fee: ¥50,000</strong> for damage due to vomiting.</li></ul></li>
+  <li>Do not move furniture or modify the facility without permission.</li>
+  <li>Sort garbage correctly (Burnable / Non-burnable / Cans・Bottles・PET). Notify us when bins are full.</li>
+  <li>Long-term stays do not grant any legal residency rights.</li>
+</ol>
+
+<h4>B. When Going Out</h4>
+<ul>
+  <li>Turn off all appliances (<strong>Air conditioner, TV, lights</strong>).</li>
+  <li><strong>Lock all doors and windows</strong> before leaving.</li>
+  <li>Do not leave minors alone without parental permission.</li>
+</ul>
+
+<h4>C. Front Door Keypad</h4>
+<ul>
+  <li>Always lock the facility when leaving.</li>
+  <li>Do not share the keypad code with anyone other than registered guests.</li>
+</ul>`
+    },
+    {
+      id: "laundry", icon: "laundry",
+      title: "Laundry",
+      body: `Please refer to the instruction sheet nearby for how to use the washing machine.`
+    },
+  ],
+  jp: [
+    {
+      id: "arrival", icon: "arrival",
+      title: "入室前",
+      body: `入室前に靴をお脱ぎください。<br>
+畳を保護するため、スーツケースの車輪カバーをご使用ください。<br><br>
+<img src="tatami-cover.jpg">`
+    },
+    {
+      id: "aircon", icon: "aircon",
+      title: "エアコン",
+      body: `<b>おすすめの設定温度</b><br>冷房　24℃　／　暖房　26℃<br><br>暖房をご利用の際、はじめから30℃など高い温度に設定されますと、エアコンが正常に作動しないことがございます。<br>恐れ入りますが、まずは25℃前後で運転を開始し、その後は1時間ごとに1℃ずつ上げていただきますようお願いいたします。`
+    },
+    {
+      id: "water", icon: "water",
+      title: "給湯温度",
+      body: `家の中に給湯操作パネルが2か所あります。<br><br>◆ <b>大きい浴室のパネル</b>：大きい浴室の壁にあります。大きい浴室のお湯を操作します。<br>◆ <b>キッチンのパネル</b>：キッチンの壁にあります。小さい浴室とキッチンシンクのお湯を操作します。<br><br><b>ご注意ください：</b><br><br>◆ 誤って <b>60℃</b> に設定すると、お湯が正常に出なくなることがあります。温度を下げてください。<br>◆ お湯がぬるい、または温かくならない場合は、電源が <b>ON</b> になっているかご確認ください。<br>◆ しばらく使用しないと、自動的に電源が切れることがあります。<br><br><img src="給湯温度.png">`
+    },
+    {
+      id: "coffee", icon: "coffee",
+      title: "コーヒーマシン",
+      body: `電源ボタンを押してください。<br><br><img src="コーヒーメーカー.png">`
+    },
+    {
+      id: "trash", icon: "trash",
+      title: "ゴミ捨て方",
+      body: `燃えるゴミ、缶・瓶類は指定のラベル付きゴミ箱に分別してください。ゴミ箱がいっぱいになった場合は、ゴミを取り出して玄関の外に置き、回収スタッフに連絡してください。<br><br><img src="garbage.png">`
+    },
+    {
+      id: "notes", icon: "notes",
+      title: "その他注意",
+      body: `◆ 料理をする際は換気扇（レンジフード）を必ずつけてください。料理の煙が火災報知器を作動させたり、家の中に臭いが染み付いたりするのを防ぐためです。<br><img src="range-hood.png"><br><br>◆ 庭に出る際は用意してある外用スリッパを使用してください。室内用のスリッパを庭に出るのに使わないようご注意ください。<br><img src="garden-slippers.png">`
+    },
+    {
+      id: "rules", icon: "rules",
+      title: "ハウスルール",
+      body: `<p class="lead"><strong>チェックイン</strong> 16:00 ｜ <strong>チェックアウト</strong> 10:00 <strong>（厳守）</strong><br>
+施設内（建物内・庭・玄関周り含む）<strong>全面禁煙</strong>です。</p>
+
+<h4>A. 施設のご利用について</h4>
+<ol>
+  <li>施設内は<strong>土足厳禁</strong>です。キャリーケース等の車輪は畳を傷めないようご注意ください。</li>
+  <li>玄関ドアは常に<strong>施錠</strong>してください。</li>
+  <li>館内禁煙です。館内で喫煙が発覚した場合、<strong>清掃費30,000円</strong>を申し受けます。</li>
+  <li>ご予約された方のみご宿泊いただけます。追加・無断宿泊は<strong>1名につき7,000円</strong>の追加料金を申し受けます。</li>
+  <li>許可なく火気・ろうそく等の使用は禁止です。調理は当施設の器具のみご使用いただき、使用後は食器類を洗浄してください。</li>
+  <li>ビジネス利用・パーティー等のイベントは禁止です。</li>
+  <li>特に<strong>22:00～07:00</strong>は静かにしてください。</li>
+  <li>備品・設備・備え付けの物品（トイレットペーパー等）を持ち出さないでください。</li>
+  <li>家具・家電・寝具等は大切にご使用ください。
+    <ul><li>破損・汚損時は新品交換相当額を請求いたします。</li><li>嘔吐等による汚損は<strong>特別料金50,000円</strong>を申し受けます。</li></ul></li>
+  <li>家具の移動や施設の改造・変更は禁止です。</li>
+  <li>ゴミは「燃えるゴミ」「燃えないゴミ」「缶・瓶・ペットボトル」に分別してください。ゴミ箱が満杯になったらお知らせください。</li>
+  <li>長期滞在の場合でも、法的居住権は発生しません。</li>
+</ol>
+
+<h4>B. 外出される際</h4>
+<ul>
+  <li>エアコン・テレビ・照明などの家電を<strong>必ず消してください</strong>。</li>
+  <li>ドア・窓をすべて<strong>施錠</strong>してください。</li>
+  <li>未成年者のみのお留守番は禁止です。</li>
+</ul>
+
+<h4>C. 玄関ドアのキーパッドについて</h4>
+<ul>
+  <li>外出の際は必ず施錠してください。</li>
+  <li>キーパッドの暗証番号は<strong>予約者以外に教えない</strong>でください。</li>
+</ul>`
+    },
+  ],
+  cn: [
+    {
+      id: "arrival", icon: "arrival",
+      title: "进入房屋前",
+      body: `进入房间前请脱鞋。<br>
+为了保护榻榻米，请使用行李箱轮套。<br><br>
+<img src="tatami-cover.jpg">`
+    },
+    {
+      id: "switch", icon: "switch",
+      title: "电灯开关",
+      body: `<a class="pdf" href="切换指南.pdf" target="_blank" rel="noopener">PDF</a>`
+    },
+    {
+      id: "aircon", icon: "aircon",
+      title: "空调调节",
+      body: `<a class="pdf" href="空调.pdf" target="_blank" rel="noopener">PDF</a>`
+    },
+    {
+      id: "water", icon: "water",
+      title: "热水温度",
+      body: `屋内有两个热水控制面板。<br><br>◆ <b>大浴室面板</b>：安装在大浴室墙上，用于控制大浴室的热水。<br>◆ <b>厨房面板</b>：安装在厨房墙上，用于控制小浴室和厨房水槽的热水。<br><br><b>请注意：</b><br><br>◆ 如果误设为 <b>60℃</b>，热水可能无法正常流出，请将温度调低。<br>◆ 如果水不够热或没有变热，请确认设备是否已开启（<b>ON</b>）。<br>◆ 若一段时间未使用，设备可能会自动关闭。<br><br><img src="热水温度.png">`
+    },
+    {
+      id: "coffee", icon: "coffee",
+      title: "咖啡机",
+      body: `按开按钮。<br><br><img src="咖啡机.png">`
+    },
+    {
+      id: "trash", icon: "trash",
+      title: "如何丢垃圾",
+      body: `请将可燃垃圾、罐子/瓶子分类放入有标签的垃圾桶。如果垃圾桶满了，请将垃圾取出，放在房子前门外面，并联系工作人员前来收取。<br><br><img src="garbage.png">`
+    },
+    {
+      id: "notes", icon: "notes",
+      title: "其他注意事项",
+      body: `◆ 做饭时请打开抽油烟机，以免油烟触发火灾报警器，并防止气味残留在屋内。<br><img src="range-hood.png"><br><br>◆ 去花园时请穿准备好的室外拖鞋，注意不要穿室内拖鞋去花园。<br><img src="garden-slippers.png">`
+    },
+    {
+      id: "rules", icon: "rules",
+      title: "房屋规则",
+      body: `<p class="lead"><strong>入住时间</strong> 16:00 ｜ <strong>退房时间</strong> 10:00 <strong>（严格遵守）</strong><br>
+设施内<strong>全面禁止吸烟</strong>（室内、庭院、入口处均禁止）。</p>
+
+<h4>1. 设施使用规定</h4>
+<ol>
+  <li>室内<strong>严禁穿鞋</strong>。请勿在榻榻米上拖拉带轮行李箱。</li>
+  <li>玄关门请随时保持<strong>上锁</strong>。</li>
+  <li>馆内全面禁烟。若在室内吸烟，将收取<strong>¥30,000</strong>清洁费。</li>
+  <li>仅限已登记的预约客人入住。额外或未经许可的客人，每人收取<strong>¥7,000</strong>罚款。</li>
+  <li>未经许可禁止使用明火、蜡烛等。请使用本设施提供的厨具，烹饪后请清洗餐具。</li>
+  <li>禁止用于商业活动、展会或举办派对等。</li>
+  <li>请保持安静，尤其<strong>22:00 至 07:00</strong>期间。</li>
+  <li>不得带走任何室内家具、设备或物品（例如卫生纸、毛巾等）。</li>
+  <li>请爱护家具、家电及床上用品。
+    <ul><li>损坏需按新品价格赔偿。</li><li>因呕吐等造成的污损，收取<strong>特别费用 ¥50,000</strong>。</li></ul></li>
+  <li>未经许可不得移动家具或对设施进行改动。</li>
+  <li>垃圾请分类投放（可燃垃圾 / 不可燃垃圾 / 罐瓶・塑料瓶）。垃圾桶满时请通知我们。</li>
+  <li>长期住宿不产生任何法律居住权。</li>
+</ol>
+
+<h4>2. 外出时</h4>
+<ul>
+  <li>请关闭所有家电（<strong>空调、电视、灯光</strong>）。</li>
+  <li><strong>锁好所有门窗</strong>。</li>
+  <li>未成年人不得单独留宿。</li>
+</ul>
+
+<h4>3. 前门电子密码锁</h4>
+<ul>
+  <li>外出时请务必锁好设施。</li>
+  <li>密码仅限登记客人使用，请勿告知他人。</li>
+</ul>`
+    },
+    {
+      id: "laundry", icon: "laundry",
+      title: "洗衣机和烘干机",
+      body: `请参阅洗衣机旁边的使用说明书。`
+    },
+  ],
+};
+
+  </script>
+  <!-- Phần xử lý dùng chung (không cần sửa) -->
+  <script>
+// ============================================================
+// Guest Guide — phần xử lý dùng chung cho 4 nhà (không cần sửa)
+// Nội dung từng nhà nằm trong script.js (HOUSE và GUIDE)
+// ============================================================
+(function () {
+  "use strict";
+
+  const UI = {
+    en: { guide: "Guide", network: "Wi-Fi network", password: "Password", copy: "Copy", copied: "Copied",
+          checkin: "Check-in", checkout: "Check-out", pdf: "Open PDF guide", contact: "Contact staff",
+          back: "Back", prev: "Previous", next: "Next",
+          thanks: "We hope you have a relaxing stay.", htmlLang: "en" },
+    jp: { guide: "ご案内", network: "Wi-Fi ネットワーク", password: "パスワード", copy: "コピー", copied: "コピー済み",
+          checkin: "チェックイン", checkout: "チェックアウト", pdf: "PDFガイドを開く", contact: "スタッフへ連絡",
+          back: "戻る", prev: "前へ", next: "次へ",
+          thanks: "どうぞごゆっくりお寛ぎくださいませ。", htmlLang: "ja" },
+    cn: { guide: "入住指南", network: "Wi-Fi 网络", password: "密码", copy: "复制", copied: "已复制",
+          checkin: "入住", checkout: "退房", pdf: "打开PDF说明", contact: "联系工作人员",
+          back: "返回", prev: "上一项", next: "下一项",
+          thanks: "祝您入住愉快，度过美好时光。", htmlLang: "zh-CN" },
+  };
+
+  const ICONS = {
+    wifi:    '<path d="M2.5 8.8a14 14 0 0 1 19 0M5.6 12.2a9.5 9.5 0 0 1 12.8 0M8.8 15.5a5 5 0 0 1 6.4 0"/><circle cx="12" cy="19" r=".9"/>',
+    key:     '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/>',
+    arrival: '<path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21M3.5 21h17"/><path d="M14.5 12.5h.01"/>',
+    switch:  '<rect x="7" y="3" width="10" height="18" rx="2"/><rect x="10" y="7" width="4" height="6" rx="1"/>',
+    aircon:  '<rect x="2.5" y="4.5" width="19" height="8" rx="2"/><path d="M6 9.5h12M7 16c0 1.5 1.5 1.8 1.5 3.5M12 16v3.5M17 16c0 1.5-1.5 1.8-1.5 3.5"/>',
+    water:   '<path d="M12 3s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5"/>',
+    coffee:  '<path d="M4.5 9h12v4.5a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V9z"/><path d="M16.5 10.5h1.2a2.3 2.3 0 0 1 0 4.6h-1.5M8.5 3.5v2.5M12.5 3.5v2.5M4 21h14"/>',
+    trash:   '<path d="M4 7h16M9.5 7V4.5h5V7M6 7l1 13h10l1-13M10 11v5.5M14 11v5.5"/>',
+    notes:   '<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8h.01"/>',
+    rules:   '<path d="M6 3.5h9.5L19 7v13.5H6z"/><path d="M15 3.5V7h4M9 11h7M9 14.5h7M9 18h4"/>',
+    laundry: '<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13.5" r="4"/><path d="M7.5 6.5h.01M10.5 6.5h.01"/>',
+    other:   '<circle cx="12" cy="12" r="9"/><path d="M8 12h8"/>',
+    copy:    '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/>',
+    check:   '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    left:    '<path d="M15 6l-6 6 6 6"/>',
+    right:   '<path d="M9 6l6 6-6 6"/>',
+    pdf:     '<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/>',
+    phone:   '<path d="M5 4h3.5l1.5 4.5-2 1.5a12 12 0 0 0 6 6l1.5-2 4.5 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  };
+  const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ICONS.other}</svg>`;
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+  };
+
+  function detectLang() {
+    const q = new URLSearchParams(location.search).get("lang");
+    if (q && GUIDE[q]) return q;
+    const saved = store.get("guide-lang");
+    if (saved && GUIDE[saved]) return saved;
+    const nav = (navigator.language || "en").toLowerCase();
+    if (nav.startsWith("ja")) return "jp";
+    if (nav.startsWith("zh")) return "cn";
+    return "en";
+  }
+
+  function hexA(hex, a) {
+    const n = parseInt(hex.replace("#", ""), 16);
+    return `rgba(${n >> 16 & 255}, ${n >> 8 & 255}, ${n & 255}, ${a})`;
+  }
+
+  // ---------- static parts ----------
+  document.documentElement.style.setProperty("--accent", HOUSE.accent);
+  document.documentElement.style.setProperty("--accent-soft", hexA(HOUSE.accent, 0.08));
+  if (HOUSE.background) document.documentElement.style.setProperty("--bg-img", `url("${HOUSE.background}")`);
+  document.title = HOUSE.name + " — Guest Guide";
+  $("barName").textContent = HOUSE.name;
+  $("houseName").textContent = HOUSE.name;
+  $("prefix").textContent = HOUSE.prefix || "";
+  const logo = $("logo");
+  logo.src = HOUSE.logo;
+  logo.alt = HOUSE.name;
+  logo.onerror = () => { logo.style.display = "none"; };
+  const wLogo = $("wLogo");
+  wLogo.src = HOUSE.logo; wLogo.alt = HOUSE.name;
+  wLogo.onerror = () => { wLogo.style.display = "none"; };
+  $("wName").textContent = HOUSE.name;
+
+  // ---------- render ----------
+  let current = "en";
+
+  function render(lang) {
+    current = lang;
+    const t = UI[lang], items = GUIDE[lang];
+    document.documentElement.lang = t.htmlLang;
+    store.set("guide-lang", lang);
+    document.querySelectorAll("#lang button").forEach(b =>
+      b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false"));
+
+    $("labelGuide").textContent = t.guide;
+
+    // quick info
+    const contact = HOUSE.contact
+      ? `<a class="q-contact" href="${esc(HOUSE.contact)}">${icon("phone")}${t.contact}</a>` : "";
+    $("quick").innerHTML = `
+      <div class="q-row">
+        <span class="q-icon">${icon("wifi")}</span>
+        <span class="q-text"><span class="q-k">${t.network}</span><span class="q-v">${esc(HOUSE.wifi.id)}</span></span>
+        <button type="button" class="copy" data-copy="${esc(HOUSE.wifi.id)}">${icon("copy")}<span>${t.copy}</span></button>
+      </div>
+      <div class="q-row">
+        <span class="q-icon">${icon("key")}</span>
+        <span class="q-text"><span class="q-k">${t.password}</span><span class="q-v">${esc(HOUSE.wifi.pw)}</span></span>
+        <button type="button" class="copy" data-copy="${esc(HOUSE.wifi.pw)}">${icon("copy")}<span>${t.copy}</span></button>
+      </div>
+      <div class="q-times">
+        <div class="q-time"><span class="q-k">${t.checkin}</span><span class="q-v">${esc(HOUSE.checkin)}</span></div>
+        <div class="q-time"><span class="q-k">${t.checkout}</span><span class="q-v">${esc(HOUSE.checkout)}</span></div>
+      </div>${contact}`;
+
+    // tiles (home)
+    $("tiles").innerHTML = items.map(it =>
+      `<a class="tile" href="#${it.id}">${icon(it.icon)}<span>${it.title}</span></a>`
+    ).join("");
+
+    // detail panels (one per item)
+    $("panels").innerHTML = items.map((it, i) => {
+      const prev = items[i - 1], next = items[i + 1];
+      return `
+      <section class="panel" id="p-${it.id}" data-id="${it.id}" role="dialog" aria-modal="true" aria-labelledby="h-${it.id}" hidden>
+        <header class="p-head">
+          <button type="button" class="p-back" aria-label="${t.back}">${icon("left")}</button>
+          <h2 id="h-${it.id}">${it.title}</h2>
+        </header>
+        <div class="p-wrap">
+          <div class="p-icon">${icon(it.icon)}</div>
+          <article class="p-body">${it.body}</article>
+          <nav class="p-nav">
+            ${prev ? `<a class="p-prev" href="#${prev.id}" data-swap>${icon("left")}<span><small>${t.prev}</small>${prev.title}</span></a>` : "<span></span>"}
+            ${next ? `<a class="p-next" href="#${next.id}" data-swap><span><small>${t.next}</small>${next.title}</span>${icon("right")}</a>` : "<span></span>"}
+          </nav>
+        </div>
+      </section>`;
+    }).join("");
+
+    // polish content: PDF buttons, images, hide missing images
+    document.querySelectorAll(".p-body a.pdf").forEach(a => { a.innerHTML = icon("pdf") + `<span>${t.pdf}</span>`; });
+    document.querySelectorAll(".p-body img").forEach(img => {
+      img.decoding = "async";
+      img.onerror = () => { img.style.display = "none"; };
+    });
+
+    $("foot").innerHTML = `<p>${t.thanks}</p>`;
+    route();
+  }
+
+  // ---------- routing: #trash opens the "trash" panel; phone back button closes it ----------
+  let openPanel = null;
+
+  function route() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const panel = id ? document.getElementById("p-" + id) : null;
+    if (openPanel && openPanel !== panel) openPanel.hidden = true;
+    if (panel) {
+      panel.hidden = false;
+      panel.scrollTop = 0;
+      document.body.classList.add("locked");
+    } else {
+      document.body.classList.remove("locked");
+    }
+    openPanel = panel;
+  }
+
+  function goHome() {
+    if (history.state && history.state.view === "panel") history.back();
+    else { history.replaceState({ view: "home" }, "", location.pathname + location.search); route(); }
+  }
+
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (a) {
+      e.preventDefault();
+      const id = a.getAttribute("href").slice(1);
+      if (a.hasAttribute("data-swap")) history.replaceState(history.state, "", "#" + id);  // prev / next
+      else history.pushState({ view: "panel" }, "", "#" + id);                                // from home
+      route();
+      return;
+    }
+    if (e.target.closest(".p-back")) goHome();
+  });
+  window.addEventListener("popstate", e => {
+    const st = e.state || {};
+    route();
+    showWelcome(st.view === "welcome");
+  });
+  window.addEventListener("hashchange", route);
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && openPanel) goHome(); });
+
+  // ---------- language ----------
+  $("lang").addEventListener("click", e => {
+    const b = e.target.closest("button[data-lang]");
+    if (b) render(b.dataset.lang);
+  });
+
+  // ---------- copy Wi-Fi ----------
+  $("quick").addEventListener("click", e => {
+    const b = e.target.closest(".copy");
+    if (!b) return;
+    copyText(b.dataset.copy).then(() => {
+      const label = b.querySelector("span");
+      b.classList.add("done");
+      b.querySelector("svg").outerHTML = icon("check");
+      label.textContent = UI[current].copied;
+      setTimeout(() => {
+        b.classList.remove("done");
+        b.querySelector("svg").outerHTML = icon("copy");
+        label.textContent = UI[current].copy;
+      }, 1600);
+    });
+  });
+
+  function fallbackCopy(text) {              // works on http:// pages and older phones
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", "");
+    ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    ta.remove();
+  }
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+    }
+    fallbackCopy(text);
+    return Promise.resolve();
+  }
+
+  // ---------- scroll niceties ----------
+  const bar = $("bar");
+  const onScroll = () => bar.classList.toggle("scrolled", window.scrollY > 170);
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  // ---------- welcome (language picker) ----------
+  const welcome = $("welcome");
+  function showWelcome(on) {
+    if (on) {
+      welcome.hidden = false; welcome.classList.remove("leaving");
+      document.body.classList.add("locked");
+    } else if (!welcome.hidden) {
+      welcome.classList.add("leaving");
+      setTimeout(() => { welcome.hidden = true; welcome.classList.remove("leaving"); }, 350);
+      if (!openPanel) document.body.classList.remove("locked");
+    }
+  }
+  welcome.addEventListener("click", e => {
+    const b = e.target.closest("button[data-pick]");
+    if (!b) return;
+    render(b.dataset.pick);
+    window.scrollTo(0, 0);
+    history.pushState({ view: "home" }, "", location.pathname + location.search);
+    showWelcome(false);
+  });
+
+  // a link straight to a section (…#trash) or ?lang=… skips the welcome screen
+  const skipWelcome = location.hash.length > 1 || new URLSearchParams(location.search).has("lang");
+  render(detectLang());
+  if (skipWelcome) {
+    welcome.hidden = true;
+    if (!history.state) history.replaceState({ view: location.hash.length > 1 ? "panel-direct" : "home" }, "");
+  } else {
+    history.replaceState({ view: "welcome" }, "");
+    showWelcome(true);
+  }
+  onScroll();
+})();
+
+  </script>
+</body>
+</html>
